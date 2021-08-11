@@ -1,0 +1,19 @@
+{
+  "name": "04-weatherapp",
+  "version": "0.0.1",
+  "description": "Console app to get weather and info about a city/region",
+  "main": "app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GalvisDeveloper/nodejs-weather-consoleapp.git"
+  },
+  "author": "Cristian Bustos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GalvisDeveloper/nodejs-weather-consoleapp/issues"
+  },
+  "homepage": "https://github.com/GalvisDeveloper/nodejs-weather-consoleapp#readme"
+}
