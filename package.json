@@ -4,7 +4,7 @@
   "description": "Console app to get weather and info about a city/region",
   "main": "app",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/GalvisDeveloper/nodejs-weather-consoleapp/issues"
   },
-  "homepage": "https://github.com/GalvisDeveloper/nodejs-weather-consoleapp#readme"
+  "homepage": "https://github.com/GalvisDeveloper/nodejs-weather-consoleapp#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "colors": "^1.4.0",
+    "inquirer": "^8.1.2",
+    "request": "^2.88.2"
+  }
 }
