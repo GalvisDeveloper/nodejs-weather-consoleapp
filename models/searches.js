@@ -1,10 +1,22 @@
+const fs = require("fs");
 const axios = require("axios");
 
 class Searches {
-  history = ["Cucuta", "Bucaramanga", "Bogota"];
+  history = [];
+  dbPath = "./db/database.json";
 
   constructor() {
-    //TODO: readDB if it exists
+    this.readFromDB();
+  }
+
+  get historyCapitalized() {
+    return this.history.map((place) => {
+      let words = place
+        .split(" ")
+        .map((p) => p[0].toUpperCase() + p.substring(1));
+
+      return words.join(" ");
+    });
   }
 
   get paramsMapbox() {
@@ -25,8 +37,6 @@ class Searches {
 
   async searchCity(city = "") {
     try {
-      //TODO: request http
-
       const instance = axios.create({
         baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${city}.json`,
         params: this.paramsMapbox,
@@ -34,7 +44,6 @@ class Searches {
 
       const resp = await instance.get();
 
-      // console.log(resp.data);
       // ({}) return an implicit object
       return resp.data.features.map((place) => ({
         id: place.id,
@@ -42,11 +51,8 @@ class Searches {
         lat: place.center[0],
         lon: place.center[1],
       }));
-
-      // return cities that are close to search
     } catch (error) {
-      let err = error.response.data.message;
-      console.log(err);
+      console.log(error.response.data.message);
       return [];
     }
   }
@@ -71,8 +77,40 @@ class Searches {
         description,
       };
     } catch (error) {
-      console.log(error);
+      console.log(
+        `\n ${error.response.data.message.red} ${
+          "can't get the weather info".red
+        }`
+      );
+      return [];
     }
+  }
+
+  //TODO: Move into history places
+  addHistory(place = "") {
+    if (this.history.includes(place.toLocaleLowerCase())) {
+      return;
+    }
+    this.history = this.history.splice(0, 9);
+
+    this.history.unshift(place.toLocaleLowerCase());
+    this.saveInDB();
+  }
+
+  saveInDB() {
+    const payload = {
+      history: this.history,
+    };
+    fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+  }
+
+  readFromDB() {
+    if (!fs.existsSync(this.dbPath)) return;
+
+    const info = fs.readFileSync(this.dbPath, { encoding: "utf-8" });
+    const data = JSON.parse(info);
+
+    this.history = data.history;
   }
 }
 
