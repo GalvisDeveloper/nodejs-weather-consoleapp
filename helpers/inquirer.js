@@ -80,16 +80,16 @@ const readInput = async (message) => {
 /**
  * Method that prints whole tasks to be selected for deletion
  */
-const listTasksToDelete = async (tasks = []) => {
-  const choices = tasks.map((task, idx) => {
+const listPlaces = async (places = []) => {
+  const choices = places.map((place, idx) => {
     const i = `${idx + 1}.`.green;
     return {
-      value: task.id,
-      name: `${i} ${task.desc}`,
+      value: place.id,
+      name: `${i} ${place.name}`,
     };
   });
 
-  choices.unshift({
+  choices.push({
     value: "0",
     name: "0. ".green + "Cancelar",
   });
@@ -98,7 +98,7 @@ const listTasksToDelete = async (tasks = []) => {
     {
       type: "list",
       name: "id",
-      message: "Delete",
+      message: "Place selection",
       choices,
     },
   ];
@@ -152,7 +152,7 @@ module.exports = {
   inquirerMenu,
   inquirerPause,
   readInput,
-  listTasksToDelete,
+  listPlaces,
   confirm,
   displayChecklist,
 };
